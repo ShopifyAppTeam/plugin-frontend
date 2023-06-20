@@ -1,0 +1,11 @@
+@media all and (min-width: 480px) {
+  .SignIn {
+    padding: 60px 0%;
+    align-items: center;
+  }
+
+  .SignIn form {
+    margin: auto;
+    max-width: 340px;
+  }
+}
