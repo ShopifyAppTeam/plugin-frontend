@@ -7,16 +7,10 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link, NavLink, Redirect } from "react-router-dom";
 import { Stack } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
+import api from "../../api/axiousConfig";
+import { isAuthenticated, logout } from "../requireAuth/RequireAuth";
 
 const Header = () => {
-    const isAuthenticated = () => {
-        const { auth } = useAuth();
-        // console.log(auth?.expires);
-        // console.log(Date.now());
-        // console.log(auth?.expires > Date.now());
-        return auth != null;
-    };
-    const handleLogout = () => { };
     return (
         <div className="Header">
             <Navbar bg="dark" variant="dark" expand="lg">
@@ -50,7 +44,7 @@ const Header = () => {
                                     navbarScroll
                                 >
                                     <NavLink className="nav-link" to="/settings">Settings</NavLink>
-                                    <Button variant="outlined" size="small">Logout</Button>
+                                    <Button onClick={logout} variant="outlined" size="small">Logout</Button>
                                 </Nav>
                             )
                             }
