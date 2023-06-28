@@ -10,17 +10,32 @@ import Paper from '@mui/material/Paper';
 import { useState } from 'react';
 import { Button, Hidden, Link, Stack, Typography, Box } from '@mui/material';
 import { Form } from 'react-bootstrap';
+import api from '../../api/axiousConfig';
+import { HttpStatusCode } from 'axios';
 
 function createData(id, service, merchant, status) {
     return { id, service, merchant, status };
 }
 
 function Orders() {
-    const [rows, setRows] = useState([createData(7777, "myService", "valera", "unshipped"),
-    createData(23847238472, "service2", "merchant2", "shipped")]);
+    const [rows, setRows] = useState([]);
 
     const getData = () => {
-        // get orders from server
+        api.get("user/orders").then((response) => {
+            if (response.status == HttpStatusCode.Ok) {
+                // console.log(response.data.map((value, _) => {
+                //     console.log(value);
+                //     return JSON.parse(value);
+                // }));
+                // console.log(response.data);
+                setRows(response.data.map((order, _) => JSON.parse(order)));
+                // console.log(response.data.map((value, _) => {
+                //     JSON.parse(value);
+                // }));
+            }
+        }).catch((e) => {
+            console.log(e);
+        });
     }
 
     useEffect(() => {
@@ -54,7 +69,7 @@ function Orders() {
                                     {row.id}
                                 </TableCell>
                                 <TableCell align="right">{row.service}</TableCell>
-                                <TableCell align="right">{row.merchant}</TableCell>
+                                <TableCell align="right">{row.shop}</TableCell>
                                 <TableCell align="right">{row.status}</TableCell>
 
                             </TableRow>
